@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.dongduk.ac.kr/s20230001/bookML/2.0"
+	xmlns:bml="http://www.dongduk.ac.kr/s20230001/bookML/2.0"
+	elementFormDefault="qualified">
+
+	<!-- type definitions -->
+	<simpleType name="ISBNType">
+		<annotation>
+			<documentation>book의 ID(ISBN) attribute에 대한 타입 정의</documentation>
+		</annotation>
+		<restriction base="string">
+			<pattern value="(97(8|9)-)?\d{9}-\d" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="priceType">
+		<annotation>
+			<documentation>도서 가격에 관한 대이터 타입 정의. currency 속성의 기본값은 "won"
+			</documentation>
+		</annotation>
+		<sequence>
+			<element name="listPrice" type="decimal" />
+			<element name="salesPrice">
+				<complexType>
+					<simpleContent>
+						<extension base="decimal">
+							<attribute name="discountRate"
+								type="bml:discountRateType" />
+						</extension>
+					</simpleContent>
+				</complexType>
+			</element>
+		</sequence>
+		<attribute name="currency" type="bml:currencyType"
+			default="won" />
+	</complexType>
+
+	<simpleType name="currencyType">
+		<annotation>
+			<documentation>가격의 통화(currency)를 위한 데이터 타입 정의</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="won" />
+			<enumeration value="dollar" />
+			<enumeration value="yen" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="discountRateType">
+		<annotation>
+			<documentation>책의 할인율을 나타냄</documentation>
+		</annotation>
+		<restriction base="integer">
+			<minInclusive value="0" />
+			<maxInclusive value="80" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="pagesType">
+		<annotation>
+			<documentation>책의 페이지 수를 나타냄</documentation>
+		</annotation>
+		<restriction base="integer">
+			<minInclusive value="1" />
+			<maxInclusive value="2000" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ratingType">
+		<annotation>
+			<documentation>책의 평점을 나타냄</documentation>
+		</annotation>
+		<restriction base="decimal">
+			<minInclusive value="1.0" />
+			<maxInclusive value="5.0" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="fileFormatType">
+		<annotation>
+			<documentation>파일 형식을 나타냄</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="EPUB" />
+			<enumeration value="PDF" />
+			<enumeration value="StreamText" />
+			<enumeration value="StreamImage" />
+		</restriction>
+	</simpleType>
+	
+	<complexType name="fileSizeType">
+		<annotation>
+			<documentation>파일 크기를 나타냄</documentation>
+		</annotation>
+		<simpleContent>
+			<extension base="decimal">
+				<attribute name="unit" type="string" />
+			</extension>
+		</simpleContent>
+	</complexType>
+	
+<!-- notation definitions -->
+
+	<!-- 표지그림을 위한 Notation 선언 -->
+	<notation name="jpeg" public="image/jpeg" system="imageViewer.exe" />	<!-- R8 -->
+	<notation name="gif" public="image/gif" system="imageViewer.exe" />
+	<notation name="png" public="image/png" system="imageViewer.exe" />
+		
+	<!-- Notation을 기반으로 표지그림 타입 정의 -->
+	<complexType name="coverImageType">
+		<attribute name="src" type="anyURI" />
+		<attribute name="type" type="string" use="required" />
+	</complexType>
+	
+<!-- attribute group definitions -->
+
+	<element name="catalog">
+		<annotation>
+			<documentation></documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="bml:bookList" />
+				<element ref="bml:bookCategory" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="bookList">
+		<complexType>
+			<sequence>
+				<element name="book" type="bml:bookType" minOccurs="0"
+					maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="bookCategory">
+		<complexType>
+			<sequence>
+				<element name="category" maxOccurs="unbounded">
+					<complexType>
+						<sequence>
+							<element name="category" minOccurs="0"
+								maxOccurs="unbounded" type="bml:categoryType" />
+						</sequence>
+						<attribute name="cid" type="string" use="required" />
+						<attribute name="name" type="string" use="required" />
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+
+	<complexType name="categoryType">
+		<sequence>
+			<element name="category" type="bml:categoryType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+		<attribute name="cid" type="string" use="required" />
+		<attribute name="name" type="string" use="required" />
+	</complexType>
+
+	<complexType name="bookType">
+		<annotation>
+			<documentation></documentation>
+		</annotation>
+		<sequence>
+			<element name="title" type="string" />
+			<element name="originalTitle" type="string" minOccurs="0" />
+			<element name="author" type="string" maxOccurs="unbounded" />
+			<element name="translator" type="string" minOccurs="0" />
+			<element name="publisher" type="string" />
+			<element ref="bml:publishDate" />
+			<element ref="bml:revisionDate" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element name="price" type="bml:priceType" />
+			<element name="pages" type="bml:pagesType" />
+			<element name="rating" type="bml:ratingType" />
+			<element name="category" type="string" maxOccurs="unbounded" />
+			<element name="coverImage" type="bml:coverImageType"
+				minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="review" type="string" minOccurs="0"
+				maxOccurs="50" />
+		</sequence>
+		<attribute name="isbn" type="bml:ISBNType" use="required" />
+	</complexType>
+
+	<complexType name="eBookType">	
+		<annotation>
+			<documentation></documentation>
+		</annotation>
+		<complexContent>
+			<extension base="bml:bookType">
+				<sequence>
+					<element name="format">
+						<complexType>
+							<attribute name="value" type="bml:fileFormatType"
+								use="required" />
+						</complexType>
+					</element>
+					<element name="size" type="bml:fileSizeType" />
+					<element name="period" type="integer" minOccurs="0" />
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="newEBookType">
+		<annotation>
+			<documentation></documentation>
+		</annotation>
+		<complexContent>
+			<extension base="bml:bookType">
+				<sequence>
+					<element name="format">
+						<complexType>
+							<attribute name="value" type="bml:fileFormatType"
+								use="required" />
+						</complexType>
+					</element>
+					<element name="size" type="bml:fileSizeType" />
+					<element name="period">
+						<simpleType>
+							<restriction base="integer">
+								<minInclusive value="1" />
+								<maxInclusive value="21" />
+							</restriction>
+						</simpleType>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	
+
+
+	<attributeGroup name="dateAttrGroup">	
+		<annotation>
+			<documentation></documentation>
+		</annotation>
+		<attribute name="year">
+			<simpleType>
+				<restriction base="gYear">
+					<minInclusive value="1900" />
+					<maxInclusive value="2025" />
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="month">
+			<simpleType>
+				<restriction base="gMonth">
+					<pattern value="--(0[1-9]|1[0-2])" />
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="day">
+			<simpleType>
+				<restriction base="gDay">
+					<pattern value="---(0[1-9]|[12][0-9]|3[01])" />
+				</restriction>
+			</simpleType>
+		</attribute>
+	</attributeGroup>
+
+
+
+	<element name="publishDate">
+		<complexType>
+			<attributeGroup ref="bml:dateAttrGroup" />
+		</complexType>
+	</element>
+
+	<element name="revisionDate">
+		<complexType>
+			<attributeGroup ref="bml:dateAttrGroup" />
+		</complexType>
+	</element>
+
+</schema>
