@@ -80,14 +80,24 @@ function startOver() {
 	  }
 	  addOnClickHandlers();
 	*/
-	$("#top5").children("img").each(
-		// 또는  $("#top5 > img").each( 
-		function() {
-			$(this).appendTo("#cds");
-			$(this).off("click");
-			$(this).on("click", addToTop5);
+	$("#top5").children("img").each(function() {
+		const $img = $(this);
+		const imgId = $img.attr("id");
+		let inserted = false;
+
+		$("#cds > img").each(function() {
+			if ($(this).attr("id") > imgId) {
+				$img.insertBefore($(this));
+				inserted = true;
+				return false; // break
+			}
+		});
+		if (!inserted) {
+			$("#cds").append($img);
 		}
-	);
+
+		$img.off("click").on("click", addToTop5);
+	});
 	$("#top5").children().remove();
 
 	// 또는 다음과 같이 구현 가능
