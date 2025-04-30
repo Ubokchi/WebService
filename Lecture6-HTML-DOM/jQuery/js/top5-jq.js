@@ -101,17 +101,34 @@ function startOver() {
 
 function moveToOriginalPosition() { // 선택된 top5 아래의 하나의 이미지를 제자리로 이동시킴
 	var imgElement = this; 		// 선택된 <img> 엘리먼트
-
+	var $img = $(imgElement);
+	
 	// imgElement의 순위를 나타내는 <span>을 삭제
-
+	$img.prev(".rank").remove();
+	
 	// cds의 <img>들 중 id 값이 imgElement의 id 값보다 크면서 가장 가까운 것을 찾아 그 앞에 삽입
-
+	var inserted = false;
+	$("#cds>img").each(function() {
+		if ($(this).attr("id") > $img.attr("id")) {
+			$img.insertBefore($(this));
+			inserted = true;
+			return false;
+		}
+	});
+		
 	// cds의 <img>들 중 id 값이 imgElement보다 큰 것이 없을 경우
 	// 위에서 cds의 자식으로 삽입되지 않으므로 별도로 처리 필요
-
+	if (!inserted) {
+		$("#cds").append($img);
+	}
+		
 	// imgElement에 대해 onclick 이벤트 핸들러 재설정
+	$img.off("click").on("click", addToTop5);
 
 	// top5 아래의 imgElement 다음에 있었던 이미지들의 순위 값을 변경
 	// (위 첫번째 단계에서 imgElement 관련 <span>을 삭제한 후 
-	//	그 다음 <span> 노드들을 미리 구해 놓으면 더 효율적으로 순위 변경 가능)			
+	//	그 다음 <span> 노드들을 미리 구해 놓으면 더 효율적으로 순위 변경 가능)		
+	$("#top5 .rank").each(function(index) {
+		$(this).text(index + 1);
+	});	
 }
