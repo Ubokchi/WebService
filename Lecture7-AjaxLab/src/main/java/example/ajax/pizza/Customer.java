@@ -4,14 +4,13 @@ public class Customer {
 	private String name;
 	private Address address;	// Address 객체 참조
 	private String phone;
-	// private String recentOrder;
+	private String recentOrder;
 	
-	public Customer(String name, Address address, String phone
-									/*, String recentOrder*/ ) {
+	public Customer(String name, Address address, String phone, String recentOrder ) {
 		this.name = name;
 		this.address = address;
 		this.phone = phone;
-		// this.recentOrder = recentOrder;
+		this.recentOrder = recentOrder;
 	}
 
 	public String getName() {
@@ -37,7 +36,7 @@ public class Customer {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-/*
+
 	public String getRecentOrder() {
 		return recentOrder;
 	}
@@ -45,12 +44,12 @@ public class Customer {
 	public void setRecentOrder(String recentOrder) {
 		this.recentOrder = recentOrder;
 	}
-*/
+
 	
 	@Override
 	public String toString() {
 		return "Customer [name=" + name + ", address=" + address + ", phone=" + phone 
-				//  + ", recentOrder=" + recentOrder
+				+ ", recentOrder=" + recentOrder
 				+ "]";
 	}	
 }
