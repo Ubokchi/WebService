@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport"
+      content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no" />
+    <meta charset="utf-8" />
+    <title>Array Iteration</title>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <h1>Array Iteration</h1>
+    <p>Open the console</p>
+    <script type="text/babel">
+
+	const nums1 = [16, 4, 9, 45, 25];
+	console.log("nums1", nums1);
+
+	const nums2 = nums1.map(val => val * 2);     // nums2 == [32, 8, 18, 90, 50]
+	console.log("nums1", nums1);
+	console.log("nums2", nums2);
+
+	const nums3 = nums2.reduce(
+		(total, val) => (total + val), 0);         // 원소들의 합 계산: total==198
+	console.log("nums2", nums2);
+	console.log("nums3", nums3);
+
+	const nums4 = nums2.reduce(
+		(max, val) => (val > max ? val : max), 0);  	// 최대값 원소 찾기: max==90
+	console.log("nums2", nums2);
+	console.log("nums4", nums4);
+
+	const nums5 = nums2.filter(val => val > 20);    	// nums5 == [32, 90, 50]
+	console.log("nums2", nums2);
+	console.log("nums5", nums5);
+
+	const nums6 = nums5.find(val => val > 40);    	// nums6 == 90
+	console.log("nums5", nums5);
+	console.log("nums6", nums6);
+
+	const nums7 = nums5.findIndex(val => val > 40);  	// nums7 == 1
+	console.log("nums5", nums5);
+	console.log("nums7", nums7);
+ 	
+    </script>
+  </body>
+</html>

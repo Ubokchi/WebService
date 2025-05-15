@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"/>
+    <meta charset="utf-8">
+    <title>Default Parameters</title>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<h1>Default Parameters</h1>
+<p>Open the console</p>
+<script type="text/babel">
+
+	function printName1(firstName="Bill", lastName="Gates") {
+		console.log(firstName + ' ' + lastName);
+	}
+	printName1();	// 인자 값들을 지정하지 않고 호출 -> "Bill", "Gates" 사용  
+
+	const defaultPerson = {
+		firstName: "Elon",  
+		lastName: "Musk" 
+	};
+	const printName2 = (person=defaultPerson) =>
+		console.log(person.firstName + ' ' + person.lastName);
+
+	printName2(); 	// 인자 객체를 지정하지 않고 호출 -> defaultPerson 객체 사용
+
+</script>
+</body>
+</html>

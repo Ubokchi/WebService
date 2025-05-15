@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport"
+      content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no" />
+    <meta charset="utf-8" />
+    <title>Higher-order Functions</title>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <h1>Higher-order Functions</h1>
+    <p>Open the console</p>
+    <script type="text/babel">
+
+	const func1 = function(fn) {	// 함수를 인자로 받음
+		fn("Hello3"); 				// 전달된 함수 호출: Hello 출력
+	};
+	const logger = message => console.log(message);
+	func1(logger);		  // func1 함수에 logger 함수를 전달 -> logger 함수가 호출됨
+
+	const createScream = function() {
+		return function(message) {	// 함수를 반환
+			console.log(message.toUpperCase() + "!!!");
+		};			
+		// 또는 return message => console.log(message.toUpperCase() + "!!!");
+	};
+	const scream = createScream();	// 함수의 실행 결과로 함수가 반환됨
+	scream("Hello4");
+			
+    </script>
+  </body>
+</html>

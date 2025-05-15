@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"/>
+    <meta charset="utf-8">
+    <title>Spread Operator</title>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<h1>Spread Operator</h1>
+<p>Open the console</p>
+<script type="text/babel">
+
+    // Convert arguments to an array with the spread operator
+    //    pick an array apart with spreads
+
+	directions("Seoul", "Suwon", "Daejon", "Daegu", "Busan");     
+
+	function directions(...args) {         //  args = [ "Seoul", "Suwon", "Daejon", "Daegu" "Busan" ]
+  		let [start, ...remaining] = args;		// 배열 구조 분해 및 spread 연산자 사용
+		let [finish, ...stops] = remaining.reverse();	// 배열 구조 분해 및 spread 연산자 사용
+    	console.log(`출발지: ${start}, 도착지: ${finish}, 경유지: ${stops.reverse().join(', ')}`);
+	}
+	
+</script>
+</body>
+</html>

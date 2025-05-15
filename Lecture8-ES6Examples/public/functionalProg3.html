@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport"
+      content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no" />
+    <meta charset="utf-8" />
+    <title>Immutability</title>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <h1>Immutability</h1>
+    <p>Open the console</p>
+    <script type="text/babel">
+
+	const list1 = [{ title: "Red" }, { title: "Green" }];
+	const addColor1 = function(title, array) {
+		array.push({ title });	      // 배열에 새로운 원소를 추가 (기존 배열 변경)  불변성 X
+		return array;
+	}
+	var res1 = addColor1("Blue", list1)     // list1 배열에 {title: "Blue"}가 추가됨
+	console.log("list1:", list1);
+	console.log("result1:", res1);
+
+	const list2 = [{ title: "Red" }, { title: "Green" }];
+	const addColor2 = (title, array) => array.concat({ title });
+			// 기존 배열을 복사한 새로운 배열을 생성 후 원소를 추가 (기존 배열 유지)  불변성 
+			// 다음과 같이 구현 가능:  (title, array) => [...array, { title }]; 
+	var res2 = addColor2("Blue", list2)     // list2 배열은 변화 없음
+	console.log("list2:", list2);
+	console.log("result2:", res2);
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"/>
+    <meta charset="utf-8">
+    <title>Promises with fetch</title>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<h1>Promises with fetch</h1>
+<p>Open the console</p>
+<script type="text/babel">
+
+async function postData(url, data) {   // async: 비동기 함수 정의(Promise 객체 반환)
+  try {
+    const response = await fetch(url, {   // await: 비동기 요청이 완료될 때까지 대기
+       method: 'POST', 			    // POST 요청의 예
+       headers: {
+         'Content-Type': 'application/json'  // , ...  다른 header들 포함
+       },
+       body: JSON.stringify(data),           // data(JS 객체)를 JSON text로 변환
+    });									
+    return response.json();    // 요청 성공 시 JSON text를 parsing한 결과 객체를 반환
+  } catch(error) { console.error('Error: ', error); }  // 요청 실패 시 실행 
+};
+
+// 위 함수 호출
+postData('https://jsonplaceholder.typicode.com/posts', 
+		  {
+			"userId": 1234567, 
+			"id": 1234, 
+			"title": "TEST", 
+			"body": "TEST POST"
+		  })
+	.then(obj => console.log('Success: ', obj));    // 위 함수에서 반환된 객체 이용 
+
+</script>
+</body>
+</html>

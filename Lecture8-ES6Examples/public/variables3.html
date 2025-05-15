@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"/>
+    <meta charset="utf-8">
+    <title>Const</title>
+</head>
+<body>
+<h1>Const</h1>
+<p>Open the console</p>
+<script type="text/javascript">
+
+    // ES6 introduces constants
+   
+	const nums = ["one","two","three"];  // Array
+	nums[0] = "four";	                 // OK
+	nums.push("five");	                 // OK
+	console.log('nums:', nums);
+	
+    nums = ["five","six","eight"];       // error!
+</script>
+</body>
+</html>

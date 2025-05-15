@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"/>
+    <meta charset="utf-8">
+    <title>Spread Operator</title>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<h1>Spread Operator</h1>
+<p>Open the console</p>
+<script type="text/babel">
+
+    // Spread Operator
+
+	const numbers = [23, 55, 21, 87, 56]; 	// 배열 
+	const maxValue = Math.max(...numbers);   // Math.max(23,55,21,87,56)과 동일
+    console.log(maxValue);
+
+	const q1 = ["Jan", "Feb", "Mar"];
+	const q2 = ["Apr", "May", "Jun"];
+	const hf1 = [...q1, ...q2];     // == ["Jan","Feb","Mar","Apr","May","Jun"]
+    console.log(hf1);
+
+	const sandwich1 = {			// 객체
+		bread: "wheat", 
+		meat: "tuna"
+	};
+	
+	const cheese = "cheddar";
+	const sandwich2 = {			// 새로운 객체 구성 
+	 	...sandwich1, 
+		cheese
+	};		          
+    console.log(sandwich2);
+
+</script>
+</body>
+</html>

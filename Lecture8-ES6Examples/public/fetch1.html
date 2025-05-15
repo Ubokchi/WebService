@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"/>
+    <meta charset="utf-8">
+    <title>Promises with fetch</title>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<h1>Promises with fetch</h1>
+<p>Open the console</p>
+<script type="text/babel">
+
+	fetch('https://jsonplaceholder.typicode.com/posts/1')     // Ajax GET 요청
+	  .then(response => response.json())  // 응답 메시지 body의 내용(JSON text)을 parsing함
+	  .then(obj => console.log('Success: ', obj.userId, obj.title))   // JS 객체
+	  .catch(error => console.error('Error: ', error));
+
+    fetch("https://api.randomuser.me/?nat=US&results=10")
+      .then(response => response.json())
+      .then(members => console.log(members))
+      .catch(err => console.error(err))
+
+</script>
+</body>
+</html>
